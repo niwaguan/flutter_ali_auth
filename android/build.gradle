@@ -46,10 +46,8 @@ android {
 
         release {
             debuggable false
-            // minifyEnabled true
-            zipAlignEnabled false
-            multiDexEnabled true
-
+            minifyEnabled false
+            shrinkResources false
         }
 
         debug {
