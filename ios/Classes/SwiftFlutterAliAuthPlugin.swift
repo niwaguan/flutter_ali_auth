@@ -52,6 +52,8 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
             hideLoginLoading(result: result)
         case "quitLoginPage":
             quitLoginPage(result: result)
+        case "checkAvailable":
+          justCheckEnvAvailable(result: result);
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -180,6 +182,17 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
             }
         }
     }
+  
+  /// 检测是否支持一键登陆
+  public func justCheckEnvAvailable(result: @escaping FlutterResult) {
+    TXCommonHandler.sharedInstance().checkEnvAvailable(with: PNSAuthType.loginToken) { (resultDict: [AnyHashable: Any]?) in
+      guard let code = resultDict?["resultCode"] as? String else {
+        result(false);
+        return
+      }
+      result(code == PNSCodeSuccess);
+    }
+  }
 
     // MARK: - 一键登录预取号（accelerateLoginPageWithTimeout）
 

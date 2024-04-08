@@ -77,6 +77,9 @@ public class FlutterAliAuthPlugin implements FlutterPlugin,
                 authClient.quitLoginPage();
                 result.success(null);
                 break;
+            case "checkAvailable":
+                authClient.checkEnvAvailable(result);
+                break;
             default:
                 result.notImplemented();
         }

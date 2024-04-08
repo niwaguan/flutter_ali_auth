@@ -16,6 +16,12 @@ class AliAuthClient {
     return _methodChannel.invokeMethod('getPlatformVersion');
   }
 
+  /// 检查是否支持一键登陆
+  static Future<bool> checkAvailable() async {
+    final available = await _methodChannel.invokeMethod<bool>('checkAvailable');
+    return available == true;
+  }
+
   /// 初始化
   /// 如果初始化错误，会抛出异常,需要用try-catch[PlatformException]捕获插件返回的异常
   /// 返回是否成功

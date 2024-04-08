@@ -497,6 +497,26 @@ public class AuthClient {
     mAuthHelper.quitLoginPage();
   }
 
+  public void checkEnvAvailable( @NonNull MethodChannel.Result result) {
+    mAuthHelper.setAuthListener(new TokenResultListener() {
+      @Override
+      public void onTokenSuccess(String s) {
+        TokenRet tokenRet = TokenRet.fromJson(s);
+        if (tokenRet != null && Objects.equals(tokenRet.getCode(), ResultCode.CODE_ERROR_ENV_CHECK_SUCCESS)) {
+          result.success(true);
+        } else {
+          result.success(false);
+        }
+      }
+
+      @Override
+      public void onTokenFailed(String s) {
+        result.success(false);
+      }
+    });
+    mAuthHelper.checkEnvAvailable(PhoneNumberAuthHelper.SERVICE_TYPE_LOGIN);
+  }
+
   public void clearCached() {
     mAuthHelper.removeAuthRegisterXmlConfig();
     mAuthHelper.removeAuthRegisterViewConfig();
