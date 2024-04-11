@@ -262,7 +262,7 @@ class PrivacyConfig {
 
   /// 协议名称之间连接字符串数组，默认 [和, 、, 、] ，即第一个为「和」，其他为「、」，
   /// 按顺序读取，为空则取默认 [和, 和]
-  final String? privacyConnectTexts;
+  final List<String>? privacyConnectTexts;
 
   /// 协议文案支持居中、居左、居右设置，默认居左
   final String? privacyPreText;

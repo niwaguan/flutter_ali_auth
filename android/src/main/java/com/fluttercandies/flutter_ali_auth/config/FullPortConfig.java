@@ -163,6 +163,7 @@ public class FullPortConfig extends BaseUIConfig {
                 .setAppPrivacyOne(authUIModel.privacyOneName, authUIModel.privacyOneUrl)
                 .setAppPrivacyTwo(authUIModel.privacyTwoName, authUIModel.privacyTwoUrl)
                 .setAppPrivacyThree(authUIModel.privacyThreeName, authUIModel.privacyThreeUrl)
+                .setPrivacyOperatorIndex(authUIModel.privacyOperatorIndex)
                 .setAppPrivacyColor(Color.GRAY, Color.parseColor(authUIModel.privacyFontColor))
                 .setPrivacyOffsetY_B(((int) privacyFrameOffsetYFromBottom))
                 .setPrivacyTextSize(Font_12)
@@ -170,7 +171,7 @@ public class FullPortConfig extends BaseUIConfig {
                 .setPrivacyEnd(authUIModel.privacySufText)
                 .setVendorPrivacyPrefix(authUIModel.privacyOperatorPreText)
                 .setVendorPrivacySuffix(authUIModel.privacyOperatorSufText)
-                .setPrivacyConectTexts(new String[]{authUIModel.privacyConnectTexts, authUIModel.privacyConnectTexts})
+                .setPrivacyConectTexts(authUIModel.privacyConnectTexts)
 
                 .setCheckboxHidden(checkBoxIsHidden)
                 .setPrivacyState(authUIModel.checkBoxIsChecked)

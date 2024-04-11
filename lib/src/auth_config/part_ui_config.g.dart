@@ -723,7 +723,7 @@ class _$PrivacyConfigCWProxyImpl implements _$PrivacyConfigCWProxy {
       privacyConnectTexts: privacyConnectTexts == const $CopyWithPlaceholder()
           ? _value.privacyConnectTexts
           // ignore: cast_nullable_to_non_nullable
-          : privacyConnectTexts as String?,
+          : privacyConnectTexts as List<String>?,
       privacyFontColor: privacyFontColor == const $CopyWithPlaceholder()
           ? _value.privacyFontColor
           // ignore: cast_nullable_to_non_nullable

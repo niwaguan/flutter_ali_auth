@@ -121,7 +121,7 @@ public class AuthUIModel {
     public String privacyFontColor = "#2196F3";
     public Double privacyFrameOffsetX;
     public Double privacyFrameOffsetY;
-    public String privacyConnectTexts = "和";
+    public String[] privacyConnectTexts;
     public String privacyPreText;
     public String privacySufText;
     public String privacyOperatorPreText = "《";
