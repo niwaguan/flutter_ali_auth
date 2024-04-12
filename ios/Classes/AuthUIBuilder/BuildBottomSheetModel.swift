@@ -267,7 +267,7 @@ extension AuthUIBuilder {
 
         model.privacyTwo = [config.privacyTwoName ?? "《隐私协议》", config.privacyTwoUrl ?? "http://******"]
 
-        model.privacyConectTexts = [config.privacyConnectTexts ?? "和", config.privacyConnectTexts ?? "和"]
+        model.privacyConectTexts = config.privacyConnectTexts ?? ["和","、","、"]
 
         model.privacyOperatorPreText = config.privacyOperatorPreText ?? "《"
 

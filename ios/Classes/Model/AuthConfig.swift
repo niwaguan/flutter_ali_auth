@@ -147,7 +147,7 @@ struct AuthUIConfig: Codable {
     var privacyFrameOffsetX: Float?
     var privacyFrameOffsetY: Float?
 
-    var privacyConnectTexts: String?
+    var privacyConnectTexts: [String]?
 
     var privacyPreText: String?
     var privacySufText: String?
