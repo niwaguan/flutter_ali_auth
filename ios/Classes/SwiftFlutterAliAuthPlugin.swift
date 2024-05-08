@@ -32,8 +32,8 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
         instance.methodChannel = channel
 
         instance.authUIBuilder.register = registrar
-        // 验证网络是否可用
-        instance.httpAuthority()
+        // 验证网络是否可用，启动会触发网络接入提示，删除
+//        instance.httpAuthority()
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
