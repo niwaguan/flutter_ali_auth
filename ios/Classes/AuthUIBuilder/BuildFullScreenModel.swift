@@ -85,7 +85,7 @@ extension AuthUIBuilder {
             // logo的位置
             model.logoFrameBlock = {
                 screenSize, _, _ -> CGRect in
-                let offsetX: CGFloat = .init(config.logoFrameOffsetX ?? (Float(screenSize.width) / 2 - kLogoSize / 2))
+                let offsetX: CGFloat = .init(config.logoFrameOffsetX ?? (Float(screenSize.width) / 2 - (config.logoWidth ?? kLogoSize) / 2))
                 let offsetY: CGFloat = .init(config.logoFrameOffsetY ?? kLogoOffset)
                 let imageWidth: CGFloat = .init(config.logoWidth ?? kLogoSize)
                 let imageHeight: CGFloat = .init(config.logoHeight ?? kLogoSize)
