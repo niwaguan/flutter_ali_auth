@@ -43,11 +43,6 @@
             android:launchMode="singleTop"
             android:name="com.mobile.auth.gatewayauth.activity.AuthWebVeiwActivity"
             android:screenOrientation="behind"/>
-
-        <!-- for override the enter animation-->
-        <activity android:name=".mask.DecoyMaskActivity"
-            android:theme="@style/TransparentTheme"
-            />
     </application>
 
 </manifest>

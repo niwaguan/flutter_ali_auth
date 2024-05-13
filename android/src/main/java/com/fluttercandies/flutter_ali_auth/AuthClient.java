@@ -7,16 +7,13 @@ import static com.fluttercandies.flutter_ali_auth.model.AuthResponseModel.preLog
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.fluttercandies.flutter_ali_auth.config.BaseUIConfig;
-import com.fluttercandies.flutter_ali_auth.mask.DecoyMaskActivity;
 import com.fluttercandies.flutter_ali_auth.model.AuthModel;
 import com.fluttercandies.flutter_ali_auth.model.AuthResponseModel;
 import com.fluttercandies.flutter_ali_auth.model.AuthUIModel;
-import com.fluttercandies.flutter_ali_auth.utils.Constant;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.mobile.auth.gatewayauth.PhoneNumberAuthHelper;
@@ -65,8 +62,6 @@ public class AuthClient {
 
   //Singleton
   private AuthClient() {}
-
-  public static Activity decoyMaskActivity;
 
   public static AuthClient getInstance() {
     if (instance == null) {
@@ -270,13 +265,6 @@ public class AuthClient {
     assert baseUIConfig != null;
     clearCached();
     baseUIConfig.configAuthPage(authModel.getAuthUIModel());
-
-    // override the decoy activity open enter animation
-    if (authModel.getAuthUIStyle().equals(Constant.DIALOG_PORT)) {
-      activity.overridePendingTransition(R.anim.zoom_in, 0);
-    } else {
-      activity.overridePendingTransition(R.anim.slide_up, 0);
-    }
     tokenResultListener =
             new TokenResultListener() {
               @Override
@@ -285,7 +273,6 @@ public class AuthClient {
                         () -> {
                           TokenRet tokenRet;
                           try {
-
                             if (s != null && !s.equals("")) {
                               tokenRet = TokenRet.fromJson(s);
                               AuthResponseModel responseModel = AuthResponseModel.fromTokenRect(tokenRet);
@@ -296,34 +283,21 @@ public class AuthClient {
                                 mAuthHelper.quitLoginPage();
                                 mAuthHelper.setAuthListener(null);
                                 clearCached();
-                              } else if (ResultCode.CODE_ERROR_FUNCTION_TIME_OUT.equals(tokenRet.getCode())
-                                      || ResultCode.MSG_ERROR_START_AUTHPAGE_FAIL.equals(tokenRet.getCode())) {
-                                if (decoyMaskActivity != null) {
-                                  decoyMaskActivity.finish();
-                                }
                               }
                               Log.d(TAG, "onTokenSuccess: " + tokenRet);
-                            } else {
-                              if (decoyMaskActivity != null) {
-                                decoyMaskActivity.finish();
-                              }
                             }
                           } catch (Exception e) {
                             AuthResponseModel responseModel = AuthResponseModel.tokenDecodeFailed();
                             mChannel.invokeMethod(
                                     ResultCode.MSG_ERROR_UNKNOWN_FAIL, responseModel.toJson());
                             e.printStackTrace();
-                            if (decoyMaskActivity != null) {
-                              decoyMaskActivity.finish();
-                            }
                           }
                         });
               }
 
               @Override
               public void onTokenFailed(String s) {
-                Log.w(
-                        TAG, "获取Token失败:" + s + " ," + "DecoyMaskActivity.isRunning:" + decoyMaskActivity);
+                Log.w(TAG, "获取Token失败:" + s);
                 TokenRet tokenRet;
                 try {
                   tokenRet = TokenRet.fromJson(s);
@@ -341,16 +315,13 @@ public class AuthClient {
                 } catch (Exception e) {
                   e.printStackTrace();
                 }
-                if (decoyMaskActivity != null) {
-                  decoyMaskActivity.finish();
-                }
                 mAuthHelper.setAuthListener(null);
                 clearCached();
               }
             };
+
     mAuthHelper.setAuthListener(tokenResultListener);
-    Intent intent = new Intent(context, DecoyMaskActivity.class);
-    activity.startActivity(intent);
+    mAuthHelper.getLoginToken(context, getLoginTimeout());
     result.success(null);
   }
 
@@ -419,42 +390,21 @@ public class AuthClient {
                                 mAuthHelper.quitLoginPage();
                                 mAuthHelper.setAuthListener(null);
                                 clearCached();
-                              } else if (ResultCode.CODE_ERROR_FUNCTION_TIME_OUT.equals(tokenRet.getCode())
-                                      || ResultCode.MSG_ERROR_START_AUTHPAGE_FAIL.equals(tokenRet.getCode())) {
-                                if (decoyMaskActivity != null) {
-                                  decoyMaskActivity.finish();
-                                }
                               }
                               Log.i(TAG, "onTokenSuccess tokenRet:" + tokenRet);
-                            } else {
-                              if (decoyMaskActivity != null) {
-                                decoyMaskActivity.finish();
-                              }
                             }
                           } catch (Exception e) {
                             AuthResponseModel responseModel = AuthResponseModel.tokenDecodeFailed();
                             mChannel.invokeMethod(
                                     ResultCode.MSG_ERROR_UNKNOWN_FAIL, responseModel.toJson());
                             e.printStackTrace();
-                            if (decoyMaskActivity != null) {
-                              decoyMaskActivity.finish();
-                            }
                           }
                         });
               }
 
               @Override
               public void onTokenFailed(String s) {
-                Log.w(
-                        TAG,
-                        "getLoginTokenWithConfig onTokenFailed:"
-                                + s
-                                + " ,"
-                                + "DecoyMaskActivity.isRunning:"
-                                + decoyMaskActivity);
-                if (decoyMaskActivity != null) {
-                  decoyMaskActivity.finish();
-                }
+                Log.w(TAG, "getLoginTokenWithConfig onTokenFailed:" + s);
                 TokenRet tokenRet;
                 try {
                   tokenRet = TokenRet.fromJson(s);
@@ -468,22 +418,12 @@ public class AuthClient {
                 } catch (Exception e) {
                   e.printStackTrace();
                 }
-                if (decoyMaskActivity != null) {
-                  decoyMaskActivity.finish();
-                }
                 mAuthHelper.setAuthListener(null);
                 clearCached();
               }
             };
     mAuthHelper.setAuthListener(tokenResultListener);
-    /// override the decoy activity open enter animation
-    if (authModel.getAuthUIStyle().equals(Constant.DIALOG_PORT)) {
-      activity.overridePendingTransition(R.anim.zoom_in, 0);
-    } else {
-      activity.overridePendingTransition(R.anim.slide_up, 0);
-    }
-    Intent intent = new Intent(activity, DecoyMaskActivity.class);
-    activity.startActivity(intent);
+    mAuthHelper.getLoginToken(activity.getBaseContext(), getLoginTimeout());
     result.success(null);
   }
 

@@ -121,6 +121,7 @@ public class FullPortConfig extends BaseUIConfig {
                 //沉浸式状态栏
                 .setNavHidden(authUIModel.navIsHidden)
                 .setNavColor(navColor)
+                .setBottomNavColor(navColor)
                 .setNavReturnImgPath("icon_close")
                 .setNavReturnScaleType(ImageView.ScaleType.CENTER_INSIDE)
                 .setNavReturnImgWidth(20)
